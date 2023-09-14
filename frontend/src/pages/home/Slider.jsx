@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BsArrowBarLeft, BsArrowBarRight } from "react-icons/bs";
-import { sliderItems } from "../assets/data";
+import { sliderItems } from "../../assets/data";
 
 const Slider = () => {
   const [card, setCard] = useState();

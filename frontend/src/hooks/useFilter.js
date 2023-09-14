@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
 
 export const useFilter = (filters, sort) => {
   const products = useSelector(s => s.products)
   const [filteredItems, setFilteredItems] = useState([])
-  const category = useParams().category
+  const params = new URLSearchParams(window.location.search)
+  const category = params.get('category')
 
   useEffect(() => {
-    if (category !== '' && category !== undefined) {
+    if (category !== null) {
       setFilteredItems(products.categoryItems)
     } else {
       setFilteredItems(products.items)
@@ -17,7 +17,7 @@ export const useFilter = (filters, sort) => {
 
   useEffect(() => {
     let items
-    if (category !== '' && category !== undefined) {
+    if (category !== null) {
       items = products.categoryItems
     } else {
       items = products.items

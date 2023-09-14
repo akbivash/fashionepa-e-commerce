@@ -65,8 +65,9 @@ const Dropdown = () => {
         {categories.map((cat) => {
           return (
             <Link
+            onClick={() => setShowCategory(false)}
               key={cat}
-              to={`/category/${cat}`.toLowerCase().replace(/\s/g, '')}
+              to={`/products?category=${cat}`}
               className={` border-b-gray-light cursor-pointer border-b-[1px]`}
             >
               {cat}

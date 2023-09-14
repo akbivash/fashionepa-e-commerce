@@ -63,40 +63,41 @@ const deleteProduct = async (req, res) => {
 // GET PRODUCTS 
 const getProducts = async (req, res) => {
   const queryNew = req.query.new;
-  const queryCategory = req.query.category;
-  const queryName = req.query.name
+  let queryCategory = req.query.category
   const querySearch = req.query.search
   const page = req.query.page
   const limit = req.query.limit
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
-
+ 
   try {
     let products;
 
     if (queryNew) {
       products = await Product.find().sort({ createdAt: -1 }).limit(5);
     } else if (queryCategory) {
+      queryCategory = queryCategory.toLowerCase().split(' ').join('')
       products = await Product.find({
         categories: {
           $in: [queryCategory],
         },
       });
 
-    }else if (querySearch) {
-      const regexPattern = new RegExp(querySearch, 'i');
+    } else if (querySearch) {
+      const searchTerms = querySearch.split(' ');
+      const regexPatterns = searchTerms.map(term => new RegExp(term, 'i'));
+
       products = await Product.find({
         $or: [
-          { title: regexPattern },
-          { categories: regexPattern },
+          { title: { $in: regexPatterns } },        // Match title
+          { categories: { $in: regexPatterns } },   // Match categories
         ],
-     
       });
     } else if (page && limit) {
       products = await Product.find();
       products = products.slice(startIndex, endIndex);
 
-    } 
+    }
     else {
       products = await Product.find();
     }
@@ -104,6 +105,7 @@ const getProducts = async (req, res) => {
 
   } catch (err) {
     res.status(400).send(err);
+    console.log(err)
     return;
   }
 };

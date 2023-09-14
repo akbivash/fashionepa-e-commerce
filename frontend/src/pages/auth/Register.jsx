@@ -4,10 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import Modal from "../components/Modal";
-import { openModal, closeModal } from "../redux/slices/modalSlice";
+import Modal from "../../components/Modal";
+import { openModal, closeModal } from "../../redux/slices/modalSlice";
 import { FaTimes } from "react-icons/fa";
-import { handleRegister } from "../actions/user";
+import { handleRegister } from "../../actions/user";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()

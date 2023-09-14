@@ -1,25 +1,17 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import Dropdown from "./Dropdown";
-import Products from "./Products";
+import {  useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-const FilterAndSort = ({width}) => {
-  const [filters, setFilter] = useState({});
-  const [sort, setSort] = useState("");
+const FilterAndSort = ({setFilters, setSort, filters, sort}) => {
   const category = useParams().category;
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-setFilter({})
-setSort({})
-  },[category])
+    setFilters({});
+    setSort({});
+  }, [category]);
 
   const handleFilter = (e) => {
-    setFilter({
+    setFilters({
       ...filters,
       [e.target.name]: e.target.value,
     });
@@ -31,14 +23,14 @@ setSort({})
 
   return (
     <>
-      <div className="p-4  mt-4 grid gap-4 sm:flex justify-between items-center relative">
+      <div className=" grid gap-4 sm:flex justify-between items-center relative">
         <div className="flex gap-2 ">
           <h2>Filter Products </h2>
           <select
             className="border-gray border-[1px] rounded-sm"
             name="color"
             onChange={handleFilter}
-            value={filters.color || 'Color'}
+            value={filters.color || "Color"}
           >
             <option value="">Color</option>
             <option value="white">White</option>
@@ -50,8 +42,7 @@ setSort({})
             className="border-gray border-[1px] rounded-sm"
             name="size"
             onChange={handleFilter}
-            value={filters.size || ''}
-
+            value={filters.size || ""}
           >
             <option value="">Size</option>
             {category === "alcohol" ? (
@@ -77,7 +68,7 @@ setSort({})
             className="border-gray border-[1px] rounded-sm"
             name="price"
             onChange={handleSort}
-            value={sort || ''}
+            value={sort || ""}
           >
             <option value="newest">Newest</option>
             <option value="asc">Price(Asc)</option>
@@ -86,11 +77,6 @@ setSort({})
         </div>
       </div>
 
-      <Products filters={filters} sort={sort} width={width}/>
-
-      <div className="dropdown  fixed top-14  z-10">
-        <Dropdown />
-      </div>
     </>
   );
 };

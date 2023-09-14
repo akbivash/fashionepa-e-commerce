@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Pay from "./stripe/Pay";
-import Modal from "../components/Modal";
+import Pay from "./Pay";
+import Modal from "../../components/Modal";
 import {
   decreaseQuantity,
   increaseQuantity,
   removeItem,
   resetState,
-} from "../redux/slices/cartSlice";
+} from "../../redux/slices/cartSlice";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
