@@ -9,11 +9,12 @@ import {
 import { Link } from "react-router-dom";
 import { ImLocation2 } from "react-icons/im";
 import { FaCcVisa, FaEnvelope } from "react-icons/fa";
-import { icons } from "../assets/data";
+import { icons } from "../../assets/data";
 
 const Footer = () => {
   return (
-    <div className="max-w-[1400px] bg-tahiti-dark text-white mx-auto   grid p-4  py-10 gap-10 justify-center   md:flex  md:justify-around">
+   <div className="w-full bg-green-dark">
+     <div className="max-w-[1400px]  text-white mx-auto   grid p-4  py-10 gap-10 justify-center   md:flex  md:justify-around">
       <div className="  grid h-fit flex-[0.7]  gap-4  text-center ">
         <h2 className="text-2xl font-[Ubuntu] tracking-wide font-black ">
           {" "}
@@ -95,6 +96,7 @@ const Footer = () => {
       </div>
      </div>
     </div>
+   </div>
   );
 };
 

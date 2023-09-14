@@ -29,8 +29,8 @@ export const getItemsByCategory = async (dispatch, category) => {
   try {
     dispatch(isLoading());
     const res = await publicRequest.get(`api/v1/products?category=${category}`);
-      dispatch(getCategoryItemsSuccess(res.data));
-    
+    dispatch(getCategoryItemsSuccess(res.data));
+   
   } catch (err) {
     console.log(err);
     dispatch(isError());

@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Modal from "../components/Modal";
+import React, { forwardRef, useEffect, useState } from "react";
+import Modal from "../../components/Modal";
 import { useDispatch, useSelector } from 'react-redux'
-import { addItem } from "../redux/slices/cartSlice";
+import { addItem } from "../../redux/slices/cartSlice";
 import { Link, useParams } from "react-router-dom";
-import Loading from "../components/Loading";
+import Loading from "../../components/Loading";
 import { AiOutlineMinusCircle } from 'react-icons/ai';
 import { BiPlusCircle } from 'react-icons/bi'
-import { closeModal, openModal, setText } from "../redux/slices/modalSlice";
-import { getSingleItem } from "../actions/products";
+import { closeModal, openModal, setText } from "../../redux/slices/modalSlice";
+import { getSingleItem } from "../../actions/products";
 
-const Product = () => {
+const ProductInfo = forwardRef(({id}, ref) => {
   const dispatch = useDispatch()
   const { isModal } = useSelector(state => state.modal)
   const [isInCart, setIsInCart] = useState(false)
@@ -19,7 +19,6 @@ const Product = () => {
   let size = products.item.size && products.item.size.length > 1 ? products.item.size[0] : products.item.size
   const cart = useSelector(state => state.cart)
 
-  const id = useParams().id
 
   useEffect(() => {
     getSingleItem(dispatch, id)
@@ -59,22 +58,24 @@ const Product = () => {
   const handleSize = (e) => {
     size = e.target.value
   }
+
+
+
   return (
     <>
       {products.isLoading && <Loading />}
       {!products.isLoading && products.isError && <div className="text-center pt-7">Sorry, try again 😐</div>}
-      {products.item && <div className="sm:flex pt-[8vh] grid px-4 place-items-center gap-8  lg:gap-20 sm:justify-center  ">
+      {products.item && <div ref={ref} className="sm:flex  grid px-4  gap-8  lg:gap-20 place-items-center sm:justify-center ">
         <img
           src={products.item.img}
           alt=""
-          className=" w-full max-w-[300px] h-[260px] sm:h-[400px] md:max-w-[400px] object-cover rounded-sm "
+          className=" w-full max-w-[300px] h-[260px] sm:h-[400px] md:max-w-[400px]  object-cover rounded-sm "
         />
 
-        <div className="flex flex-col items-center gap-6">
-          <h2 className="text-3xl ">{products.item.title}</h2>
-          <p className="text-center">{products.item.desc}</p>
+        <div className="flex w-full max-w-[400px]  flex-col items-center gap-6">
+          <h2 className="text-2xl ">{products.item.title}</h2>
           <span className="text-2xl">Rs {products.item.price}</span>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center ">
             <span>Color</span>
             <select className=" mx-2 border-2 text-black rounded-sm outline-none " onChange={handleColor}>
               {products.item && products.item.color && products.item.color.map((color) => {
@@ -92,8 +93,8 @@ const Product = () => {
             </div>
           </div>
 
-          <div className="flex gap-10 ">
-            <div className="flex gap-5 items-center">
+          <div className="flex justify-around   w-full ">
+            <div className="flex gap-2 items-center">
               <span
                 className="text-4xl text-yellow-dark cursor-pointer"
                 onClick={() => handleQuantity("dec")}
@@ -104,8 +105,8 @@ const Product = () => {
               </span>
             </div>
             {
-              isInCart ? <Link to='/cart' className="bg-green-dark p-3 rounded-sm text-white  text-center w-[130px]">Open Cart</Link> : <button
-                className="bg-green-dark p-3  text-center rounded-sm text-white disabled:opacity-50  w-[130px]"
+              isInCart ? <Link to='/cart' className="bg-green-dark p-3 rounded-sm text-white  text-center w-[120px]">Open Cart</Link> : <button
+                className="bg-green-dark p-2  text-center rounded-sm text-white disabled:opacity-50  w-[130px]"
                 onClick={addToCart}
                 disabled={products.item.price === undefined || products.item === undefined || products.isError || products.isLoading}
               >
@@ -122,6 +123,6 @@ const Product = () => {
       </div>}
     </>
   );
-};
+})
 
-export default Product;
+export default ProductInfo
