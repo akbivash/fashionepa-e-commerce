@@ -13,6 +13,7 @@ import {
 } from "../../redux/slices/componentsSlice";
 import { useDebounceSearch } from "../../hooks/useDebounce";
 import { getAllItems } from "../../actions/products";
+import MobileSearch from './MobileSearch';
 
 const Search = () => {
   const [searchText, setSearchText] = useState("");
@@ -74,62 +75,35 @@ const Search = () => {
   }, [debounceSearch]);
 
   return (
-    <div  className={`${
-      state.components.isSearchbarOpen || searchText !== ""
-        ? "absolute top-0 left-0 w-full  "
-        : " w-fit"
-    } sm:w-full bg-white  sm:relative  z-50   h-full    rounded-md`}>
-      <div
-        className={`
-          w-[90%] h-[90%] bg-white  sm:relative  z-50   mx-auto mt-1  gap-2 border-[1px] flex sm:border-[1px]  items-center p-2  rounded-md`}
-      >
-        <span
-          className={`${
-            state.components.isSearchbarOpen || searchText !== ""
-              ? "block  cursor-pointer  sm:hidden "
-              : "hidden"
-          } `}
-          onClick={() => {
-            dispatch(closeSearchbar());
-            setSearchText("");
-          }}
-        >
-          {" "}
-          <BiLeftArrow />
-        </span>
-        <input
-          onChange={(e) => setSearchText(e.target.value)}
-          value={searchText}
-          type="text"
-          className={` ${
-            state.components.isSearchbarOpen || searchText !== ""
-              ? "block "
-              : "hidden "
-          } text-lg  sm:block  w-full border-none outline-none`}
-        />
-        <span>
-          {/* it should not open search bar when the width is greater than 640px, it is already opened. so there are two icons, one is without onClick handler   */}
-          {searchText !== "" && (
-            <FaTimes
-              onClick={() => setSearchText("")}
-              className=" cursor-pointer text-2xl  w-full  "
-            />
-          )}
+    <div className="w-full relative flex justify-end " >
+     
+        {/* for larger device  */}
+       <div className="hidden w-full  sm:flex border-[1px] border-gray-light sm:items-center  rounded-md px-2">
+       <input type="text" className="outline-none border-none p-1 w-full " onChange={(e) => setSearchText(e.target.value)} value={searchText} />
+       
+       {searchText !== "" && (
+         <FaTimes
+           onClick={() => setSearchText("")}
+           className=" cursor-pointer  w-10  "
+         />
+       )}
+       <AiOutlineSearch
+         className={`${
+           searchText === "" ? "block" : "hidden"
+         } cursor-pointer text-2xl w-10`}
+       />
+       </div>
+          
+          {/* for mobile  */}
           <AiOutlineSearch
-            onClick={() => dispatch(openSearchbar())}
-            className={`${
-              searchText === "" ? "block" : "hidden"
-            } sm:hidden  cursor-pointer text-2xl`}
-          />
-          <AiOutlineSearch
-            className={`${
-              searchText === "" ? "sm:block hidden " : "hidden"
-            }   cursor-pointer text-2xl`}
-          />
-        </span>
+        onClick={() => dispatch(openSearchbar())}
+        className="sm:hidden cursor-pointer"
+        fontSize={20}
+       />
+         {state.components.isSearchbarOpen && <MobileSearch searchText={searchText} setSearchText={setSearchText}/>}
         {/* suggestionsBox */}
         {state.components.isSearchSuggestions && (
-          <div className="search-ref bg-white shadow-3xl shadow-gray-dark py-2 w-full grid gap-1 absolute left-0 top-[8vh] text-center max-w-2xl">
+          <div className="search-ref bg-white shadow-3xl z-20 shadow-red-light py-2 w-full grid gap-1 absolute left-0 top-[8vh] text-center max-w-2xl">
             {searchSuggestions.length !== 0
               ? searchSuggestions.slice(0, 10).map((p, i) => {
                   return (
@@ -149,7 +123,6 @@ const Search = () => {
           </div>
         )}
       </div>
-    </div>
   );
 };
 
