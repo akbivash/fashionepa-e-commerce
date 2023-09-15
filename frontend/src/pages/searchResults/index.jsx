@@ -26,17 +26,15 @@ const SearchResults = () => {
     setEndIndex(page * limit);
   }, [page, limit]);
 
-  
   return (
     <>
+         {products.loading  && <Loading />}
       <div className="p-4 sm:px-10 grid  justify-center  grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-2 min-h-[200px] ">
-        {products.loading  && <Loading />}
-        { products.searchResults.length !== 0 ? (
+   
+        { products.searchResults.length !== 0 && (
           products.searchResults.slice(startIndex, endIndex).map((item) => {
             return <Product item={item} key={item._id} query={query} />;
           })
-        ) : (
-          <span className="text-center">No items found</span>
         )}
       </div>
       {products.searchResults.length !== 0 && (

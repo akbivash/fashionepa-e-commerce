@@ -45,6 +45,7 @@ const Search = () => {
       dispatch(openSearchSuggestions());
     }
 
+
     if (state.products.items.length !== 0) {
       const filteredItems = state.products.items.filter(
         (item) =>
@@ -52,24 +53,35 @@ const Search = () => {
             category.toLowerCase().includes(searchText.toLowerCase())
           ) || item.title.toLowerCase().includes(searchText.toLowerCase())
       );
-      const suggestions = filteredItems.flatMap((item) => [
-        ...item.categories.filter((category) =>
-          category.toLowerCase().includes(searchText.toLowerCase())
-        ),
-        item.title,
-      ]);
+    
+      const uniqueTitlesAndCategories = new Set();
+    
+      filteredItems.forEach((item) => {
+        uniqueTitlesAndCategories.add(item.title);
+    
+        item.categories.forEach((category) => {
+          uniqueTitlesAndCategories.add(category);
+        });
+      });
+    
+      const suggestions = Array.from(uniqueTitlesAndCategories).filter((value) =>
+        value.toLowerCase().includes(searchText.toLowerCase())
+      );
+    
       setSearchSuggestions(suggestions);
     }
+    
   }, [debounceSearch]);
 
   return (
-    <>
+    <div  className={`${
+      state.components.isSearchbarOpen || searchText !== ""
+        ? "absolute top-0 left-0 w-full  "
+        : " w-fit"
+    } sm:w-full bg-white  sm:relative  z-50   h-full    rounded-md`}>
       <div
-        className={`${
-          state.components.isSearchbarOpen || searchText !== ""
-            ? "absolute top-0 left-0 w-full  "
-            : " w-fit"
-        } sm:w-full bg-white  sm:relative  z-50   h-full   gap-2 border-[1px] flex sm:border-[1px]  items-center p-2  rounded-md`}
+        className={`
+          w-[90%] h-[90%] bg-white  sm:relative  z-50   mx-auto mt-1  gap-2 border-[1px] flex sm:border-[1px]  items-center p-2  rounded-md`}
       >
         <span
           className={`${
@@ -137,7 +149,7 @@ const Search = () => {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
