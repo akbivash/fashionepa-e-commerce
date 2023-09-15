@@ -29,7 +29,6 @@ const productSlice = createSlice({
                         state.error = false
 
                 },
-
                 getSingleItemSuccess: (state, action) => {
                         state.item = action.payload
                         state.loading = false
@@ -39,14 +38,16 @@ const productSlice = createSlice({
                         state.searchResults = action.payload
                         state.loading = false
                         state.error = false
-
                 },
-                getCategoryItemsSuccess:(state, action) => {
-                        state.loading = false 
-                        state.error = false
-                        state.categoryItems = action.payload
-                }
 
+                getCategoryItemsSuccess: (state, action) => {
+                        return {
+                          ...state,
+                          loading: false,
+                          error: false,
+                          categoryItems: action.payload,
+                        };
+                      }
         }
 })
 

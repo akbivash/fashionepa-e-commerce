@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { resetState } from '../redux/slices/cartSlice'
-import { logoutSuccess } from '../redux/slices/userSlice'
+import { resetState } from '../../redux/slices/cartSlice'
+import { logoutSuccess } from '../../redux/slices/userSlice'
 
 const Logout = () => {
   const navigate = useNavigate()
