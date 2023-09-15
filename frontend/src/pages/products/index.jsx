@@ -66,11 +66,11 @@ const Products = () => {
       </div>
       <div
         className={`${
-          products.error || (products.loading && "min-h-[50vh]")
+          products.loading && "min-h-[40vh]"
         } text-center  grid place-items-center  `}
       >
         {products.error && !products.loading && (
-          <div className="min-h-[50vh] grid place-items-center">
+          <div className="min-h-[40vh] grid place-items-center">
             Failed to fetch, try again 😐
           </div>
         )}

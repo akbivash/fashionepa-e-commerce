@@ -98,12 +98,12 @@ const Search = () => {
           <AiOutlineSearch
         onClick={() => dispatch(openSearchbar())}
         className="sm:hidden cursor-pointer"
-        fontSize={20}
+        fontSize={25}
        />
-         {state.components.isSearchbarOpen && <MobileSearch searchText={searchText} setSearchText={setSearchText}/>}
+         {state.components.isSearchbarOpen  && <MobileSearch searchText={searchText} setSearchText={setSearchText}/>}
         {/* suggestionsBox */}
         {state.components.isSearchSuggestions && (
-          <div className="search-ref bg-white shadow-3xl z-20 shadow-red-light py-2 w-full grid gap-1 absolute left-0 top-[8vh] text-center max-w-2xl">
+          <div className={`  search-ref fixed left-4 right-4 top-[10vh]  sm:absolute sm:left-0 grid gap-1 bg-white  text-center  max-w-2xl`}>
             {searchSuggestions.length !== 0
               ? searchSuggestions.slice(0, 10).map((p, i) => {
                   return (
