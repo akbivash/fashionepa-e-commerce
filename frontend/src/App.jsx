@@ -60,11 +60,7 @@ const App = () => {
             <Route path="/" element={<Home width={width} />} />
             <Route path="/account" element={<Account />} />
             <Route path="/products" element={<FilterAndSort  width={width}/>} />
-            <Route path="/search/:searchText" element={<SearchResults />} />
-            <Route path="/category/:category" element={<FilterAndSort width={width}/>} />
-            <Route path="/product/:id" element={<Product />} />
-            <Route path="/products/product/:id" element={<Product />} />
-            <Route path={`/category/:category/:id`} element={<Product />} />
+            <Route path="/search" element={<SearchResults />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" exact element={<Login state={location.pathname} />} />
             <Route path="/logout" element={<Logout />} />

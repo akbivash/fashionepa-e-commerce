@@ -81,7 +81,7 @@ const Search = () => {
         {/* suggestionsBox */}
         {state.components.isSearchSuggestions && <div className='search-ref bg-white shadow-3xl shadow-gray-dark py-2 w-full grid gap-1 absolute left-0 top-[60px] text-center max-w-2xl'>
           {searchSuggestions.length !== 0 ? searchSuggestions.slice(0, 10).map((p,i) => {
-            return <Link key={p + i} to={`/search/${p}`} className='font-semibold text-gray-default tracking-wider' onClick={() => {
+            return <Link key={p + i} to={`/search?query=${p}`} className='font-semibold text-gray-default tracking-wider' onClick={() => {
               dispatch(closeSearchSuggestions())
               dispatch(closeSearchbar())
             }}>{p}</Link>
