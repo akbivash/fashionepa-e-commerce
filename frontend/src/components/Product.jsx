@@ -40,7 +40,7 @@ const Product = ({ item , query}) => {
             />
           </div>
         </div>
-        <div className="bg-white p-2 absolute bottom-0 ">${item.price}</div>
+        <div className="bg-white p-2 absolute bottom-0 ">Rs {item.price}</div>
       </div>
       {isModal && (
         <Modal className="fixed">
